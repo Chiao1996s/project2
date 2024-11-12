@@ -6,6 +6,8 @@ import { Icon } from '@rneui/themed';
 
 import HomeScreen from './screens/HomeScreen';
 import ContactDetailsScreen from './screens/ContactDetailsScreen';
+import ContactInfo from './screens/ContactInfo';
+
 import store from './app/store';
 
 const Stack = createNativeStackNavigator();
@@ -36,6 +38,11 @@ function AppContainer() {
             name="ContactDetails"
             component={ContactDetailsScreen}
             options={{ title: 'Contact Details' }}
+          />
+          <Stack.Screen
+            name="ContactInfo"
+            component={ContactInfo}
+            options={{ title: 'Contact Info' }}
           />
         </Stack.Navigator>
       </NavigationContainer>

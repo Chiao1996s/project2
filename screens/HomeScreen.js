@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Text, StyleSheet, View, FlatList, TouchableOpacity } from "react-native";
-import { FAB, Icon } from "@rneui/base";
+import { Icon } from "@rneui/themed";
 import { deleteItem } from "../features/todoSlice";
 
 function HomeScreen({ navigation }) {
@@ -16,7 +16,7 @@ function HomeScreen({ navigation }) {
             <TouchableOpacity
               style={styles.listItemTextContainer}
               onPress={() =>
-                navigation.navigate('ContactDetails', { item })
+                navigation.navigate('ContactInfo', { item })
               }
             >
               <Text style={styles.listItemText}>{`${item.firstName} ${item.lastName}`}</Text>
@@ -39,7 +39,6 @@ function HomeScreen({ navigation }) {
         )}
         keyExtractor={(item) => item.key.toString()}
       />
-
     </View>
   );
 }

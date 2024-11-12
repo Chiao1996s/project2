@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import { Input, Button } from '@rneui/themed';
 import { useDispatch } from 'react-redux';
 import { addItem, updateItem } from "../features/todoSlice";
@@ -13,15 +13,15 @@ function ContactDetailsScreen({ navigation, route }) {
   const [company, setCompany] = useState(item?.company || '');
   const [phone, setPhone] = useState(item?.phone || '');
   const [email, setEmail] = useState(item?.email || '');
-  const [street1, setStreet1] = useState(item?.street1 || '');
-  const [street2, setStreet2] = useState(item?.street2 || '');
-  const [city, setCity] = useState(item?.city || '');
-  const [state, setState] = useState(item?.state || '');
-  const [zip, setZip] = useState(item?.zip || '');
+  const [street1, setStreet1] = useState(item?.address?.street1 || '');
+  const [street2, setStreet2] = useState(item?.address?.street2 || '');
+  const [city, setCity] = useState(item?.address?.city || '');
+  const [state, setState] = useState(item?.address?.state || '');
+  const [zip, setZip] = useState(item?.address?.zip || '');
 
   const handleSave = () => {
     const newItem = {
-      key: item.key !== -1 ? item.key : Date.now(), // Use existing key if updating; generate new if adding
+      key: item.key !== -1 ? item.key : Date.now(),
       firstName,
       lastName,
       company,
@@ -31,9 +31,9 @@ function ContactDetailsScreen({ navigation, route }) {
     };
   
     if (item.key === -1) {
-      dispatch(addItem(newItem)); // Add new contact
+      dispatch(addItem(newItem));
     } else {
-      dispatch(updateItem(newItem)); // Update existing contact
+      dispatch(updateItem(newItem));
     }
     navigation.goBack();
   };
