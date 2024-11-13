@@ -1,53 +1,93 @@
-import { useState } from 'react';
+import React from 'react';
+import { View, Text, TouchableOpacity} from 'react-native';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Provider } from 'react-redux';
-import { Icon } from '@rneui/themed';
 
+import ContactInfoScreen from './screens/ContactInfoScreen';
+import EditContactScreen from './screens/EditContactScreen';
+import GroupsScreen from './screens/GroupScreen';
 import HomeScreen from './screens/HomeScreen';
-import ContactDetailsScreen from './screens/ContactDetailsScreen';
-import ContactInfo from './screens/ContactInfo';
+import NewContactScreen from './screens/NewContactScreen';
 
-import store from './app/store';
+import { firebaseConfig } from './Secrets';
+import { initializeApp } from 'firebase/app';
+
+import Icon from 'react-native-vector-icons/Ionicons';
+
+const app = initializeApp(firebaseConfig);
 
 const Stack = createNativeStackNavigator();
 
-function AppContainer() {
+export default function AppContainer() {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ title: 'Contacts' }}>
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={({ navigation }) => ({
-              headerRight: () => (
-                <Icon
-                  name="plus"
-                  type="font-awesome"
-                  color="darkblue"
-                  onPress={() =>
-                    navigation.navigate('ContactDetails', { item: { key: -1 } })
-                  }
-                  style={{ marginRight: 15 }}
-                />
-              ),
-            })}
-          />
-          <Stack.Screen
-            name="ContactDetails"
-            component={ContactDetailsScreen}
-            options={{ title: 'Contact Details' }}
-          />
-          <Stack.Screen
-            name="ContactInfo"
-            component={ContactInfo}
-            options={{ title: 'Contact Info' }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Contacts">
+        <Stack.Screen
+          name="Contacts"
+          component={HomeScreen}
+          options={({ navigation }) => ({
+            headerStyle: { backgroundColor: 'black' },
+            headerTitleStyle: { color: 'white' },
+            headerTitle: () => (
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ marginLeft: 10, fontWeight: 'bold', color: 'white', fontSize: 20 }}>All Contacts</Text>
+              </View>
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="AddContact"
+          component={NewContactScreen}
+          options={{
+            headerStyle: { backgroundColor: 'black' },
+            headerTitleStyle: { color: 'white' },
+            headerTitle: 'New Contact',
+            headerBackTitleStyle: { color: 'white' },
+            headerTintColor: 'white',
+          }}
+        />
+        <Stack.Screen
+          name="EditContact"
+          component={EditContactScreen}
+          options={{
+            headerStyle: { backgroundColor: 'black' },
+            headerTitleStyle: { color: 'white' },
+            headerTitle: 'Edit Contact',
+            headerBackTitleStyle: { color: 'white' },
+            headerTintColor: 'white',
+
+          }}
+        />
+        <Stack.Screen
+          name="Groups"
+          component={GroupsScreen}
+          options={({ navigation }) => ({
+            headerStyle: { backgroundColor: 'black' },
+            headerTitleStyle: { color: 'white' },
+            headerTitle: 'Groups',
+            headerTintColor: 'white',
+            headerRight: () => (
+              <TouchableOpacity onPress={() => navigation.navigate('Groups', { addGroupModal: true })}>
+                <Icon name="add" size={25} color="white" style={{ marginRight: 15 }} />
+              </TouchableOpacity>
+            ),
+          })}
+        />
+
+
+        <Stack.Screen
+          name="ContactInfoScreen"
+          component={ContactInfoScreen}
+          options={{
+            headerStyle: { backgroundColor: 'black' },
+            headerTitleStyle: { color: 'white' },
+            headerBackTitleStyle: { color: 'white' },
+            headerTintColor: 'white',
+
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-export default AppContainer;

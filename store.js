@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import todoReducer from './features/todoSlice';
+import contactsReducer from './features/contactSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    todos: todoReducer,
-  },
+    contacts: contactsReducer
+  }
 });
-
-export default store;
